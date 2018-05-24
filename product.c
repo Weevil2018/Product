@@ -1,39 +1,40 @@
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
+#include <string.h>
 
 short* multiply(short*,short*);
 void temporary(short*,short,short,short*);
 void display(short, short, short*);
 int digits(unsigned long long);
-void store (short* , unsigned long long);
+void store (short* , char*);
 void reverse(short*);
 int sum_digits(short*);
 short* copy_array(short*,short*);
 
 int main()
 {
-    short i;
-    unsigned long long a = 9838644839949268, b = 123;
-    short *num1 = (short*)malloc(sizeof(short) * (digits(a) + 1) );
-    short *num2 = (short*)malloc(sizeof(short) * (digits(b) + 1) );
+    short i = 0;
+    char a[] = "6668014432879854274079851790721257797144758322315908160396257811764037237817632071521432200871554290742929910593433240445888801654119365080363356052330830046095157579514014558463078285911814024728965016135886601981690748037476461291163877376";
+    char b[] = "1606938044258990275541962092341162602522202993782792835301376";
+    short *num1 = (short*)malloc(sizeof(short) * (strlen(a) + 1) );
+    short *num2 = (short*)malloc(sizeof(short) * (strlen(b) + 1) );
     short* result;
-    num1[0] = digits(a);
-    num2[0] = digits(b);
+    num1[0] = strlen(a);
+    num2[0] = strlen(b);
     store(num1,a);
     store(num2,b);
-    result = multiply(num1, num2);
+    result = multiply(num1,num2);
     printf("\n");
-    num2 = copy_array(num1,num2);
-    for (i = 1; i <= num2[0]; i++)
-        printf("%d", num2[i]);
+    for (i = 0; i <= result[0]; i++)
+        printf("%d", result[i]);
+    printf("\n\nSum = %d\n",sum_digits(result));
     return 0;
 }
 
 int sum_digits(short* ptr)
 {
     int i, sum = 0;
-    for (i = 1; i < ptr[0]; i++)
+    for (i = 1; i <= ptr[0]; i++)
         sum += ptr[i];
     return sum;
 }
@@ -76,6 +77,7 @@ short* multiply(short* mul1,short* mul2)//Assuming the first element is size of 
         product[i] = product[i - 1];
     product[0] = l - 1;
     reverse(product);
+    free(temp);
     return product;
 }
 
@@ -103,14 +105,11 @@ void display(short row, short col,short* temp)
     }
 }
 
-void store(short* arr, unsigned long long a)
+void store(short* arr, char* a)
 {
     short i;
-    for ( i = 1; i <= arr[0]; i++, a /= 10)
-    {
-        arr[i] = a%10;
-    }
-    reverse(arr);
+    for ( i = 1; i <= arr[0]; i++)
+        arr[i] = a[i - 1] - 48;
 }
 
 short* copy_array(short* a,short* b)
