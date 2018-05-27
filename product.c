@@ -28,6 +28,9 @@ int main()
     for (i = 0; i <= result[0]; i++)
         printf("%d", result[i]);
     printf("\n\nSum = %d\n",sum_digits(result));
+    free(num1);
+    free(num2);
+    free(result);
     return 0;
 }
 
